@@ -1,15 +1,15 @@
 extern crate gio;
 extern crate gtk;
 
-mod toolbar;
+mod components;
 
 use gtk::prelude::*;
 use gtk::{Application, ApplicationWindow};
 
-use toolbar::MusicToolbar;
+use components::container::Container;
 
 struct App {
-    toolbar: MusicToolbar,
+    container: Container,
     window: ApplicationWindow,
 }
 
@@ -20,35 +20,12 @@ impl App {
             .title("Rusic")
             .build();
 
-        let toolbar = MusicToolbar::new();
-        window.add(toolbar.toolbar());
+        let container = Container::new();
+        window.add(&container.container);
 
         window.show_all();
 
-        let app = App { toolbar, window };
-
-        app.connect_events();
-
-        app
-    }
-
-    fn connect_events(&self) {}
-
-    pub fn connect_toolbar_events(&self) {
-        let window = self.window.clone();
-        self.toolbar.quit_button.connect_clicked(move |_| unsafe {
-            window.destroy();
-        });
-
-        let play_button = self.toolbar.play_button.clone();
-        self.toolbar.play_button.connect_clicked(move |_| {
-            // if play_button.fmt() == Some(PLAY_STOCK.to_string()) {
-            //     play_button.set_stock_id(PAUSE_STOCK);
-            // } else {
-            //     play_button.set_stock_id(PLAY_STOCK);
-            // }
-            println!("{:?}", play_button);
-        });
+        App { container, window }
     }
 }
 
