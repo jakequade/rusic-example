@@ -1,42 +1,20 @@
-extern crate gio;
-extern crate gtk;
+extern crate druid;
 
 mod components;
 
-use gtk::prelude::*;
-use gtk::{Application, ApplicationWindow};
+use druid::{AppLauncher, Data, Lens, WindowDesc};
 
-use components::container::Container;
+use components::container::{AppContainer, AppContainerState};
 
-struct App {
-    container: Container,
-    window: ApplicationWindow,
-}
-
-impl App {
-    fn new(application: &Application) -> Self {
-        let window = ApplicationWindow::builder()
-            .application(application)
-            .title("Rusic")
-            .build();
-
-        let container = Container::new();
-        window.add(&container.container);
-
-        window.show_all();
-
-        App { container, window }
-    }
-}
+#[derive(Clone, Data, Lens)]
+struct HelloState {}
 
 fn main() {
-    let application = Application::builder()
-        .application_id("com.example.Rusic")
-        .build();
+    // describe the main window
+    let main_window = WindowDesc::new(|| AppContainer::init()).window_size((350.0, 500.0));
 
-    application.connect_activate(|application| {
-        let app = App::new(application);
-    });
-
-    application.run();
+    // start the application
+    AppLauncher::with_window(main_window)
+        .launch(AppContainerState {})
+        .expect("Failed to launch application");
 }

@@ -1,1 +1,1 @@
-Trying to create https://dribbble.com/shots/15364137-Playme-Podcasts-App in GTK
+Trying to create https://dribbble.com/shots/14607964-Mobile-Music-Player-Dark-Theme in GTK

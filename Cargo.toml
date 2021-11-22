@@ -6,7 +6,4 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-gio = "0.14.5"
-gtk = "0.14.1"
-gdk = "0.14.2"
-gdk-pixbuf = "0.14.0"
+druid = { version = "0.7.0", features = ["svg"]}

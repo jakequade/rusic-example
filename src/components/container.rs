@@ -1,34 +1,35 @@
-use gtk::prelude::*;
-use gtk::{Box, BoxBuilder, Orientation, SeparatorBuilder};
+use druid::widget::Label;
+use druid::widget::{Align, Container, Flex, TextBox, Widget};
+use druid::{AppLauncher, Data, Env, Lens, LocalizedString, WidgetExt, WindowDesc};
 
-use crate::components::{song_title_like_bar::SongTitleLikeBar, toolbar::MusicToolbar};
+use crate::components::song_view::buttons_bar;
 
 /// Contains all the elements that make up the app.
-pub struct Container {
-    pub container: Box,
+/// Elements should be added before `for child in children` here.
+pub struct AppContainer {
+    pub container: Box<dyn Widget<u32>>,
 }
 
-impl Container {
-    pub fn new() -> Self {
-        let container = BoxBuilder::new()
-            .vexpand(true)
-            .hexpand(true)
-            .orientation(Orientation::Vertical)
-            .build();
+#[derive(Clone, Data, Lens)]
+pub struct AppContainerState {}
 
-        let mut children = vec![];
+impl AppContainer {
+    pub fn init() -> impl Widget<AppContainerState> {
+        // let data = 0_u32;
 
-        let song_title = SongTitleLikeBar::new();
-        children.push(song_title.component());
+        // let mut children = vec![];
 
-        let music_toolbar = MusicToolbar::new();
-        children.push(music_toolbar.toolbar());
+        // let container = Box::from(Flex::column());
 
-        for child in children {
-            container.add(child);
-            container.add(&SeparatorBuilder::new().margin(10).build())
-        }
+        // let music_actions_bar = buttons_bar::ButtonsBar::new();
+        // AppContainer { container }
 
-        Container { container }
+        // a label that will determine its text based on the current app data.
+        let label = Label::new("hi there").padding(5.0).center();
+
+        // arrange the two widgets vertically, with some padding
+        let layout = Flex::column().with_child(label).with_spacer(2.0);
+
+        layout
     }
 }
